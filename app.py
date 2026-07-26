@@ -16,9 +16,12 @@ if uploaded_file and api_key:
     
     st.info("AI Processing chal rahi hai...")
     
+    # Simple fixed filename to prevent UnicodeEncodeError
+    clean_filename = "audio." + uploaded_file.name.split(".")[-1]
+    
     # 1. Speech to Text
     transcription = client.audio.transcriptions.create(
-        file=(uploaded_file.name, uploaded_file.read()),
+        file=(clean_filename, uploaded_file.read()),
         model="whisper-large-v3",
         language="hi"
     )
